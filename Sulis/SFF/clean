@@ -1,0 +1,2 @@
+find . -type f ! -name 'receive_sulis' ! -name 'send_sulis' ! -name 'clean' -delete
+find . -type d ! -name 'receive_sulis' ! -name 'send_sulis' ! -name 'clean' -delete
