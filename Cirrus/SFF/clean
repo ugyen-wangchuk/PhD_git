@@ -1,0 +1,2 @@
+find . -type f ! -name 'receive_cirrus' ! -name 'send_cirrus' ! -name 'clean' -delete
+find . -type d ! -name 'receive_cirrus' ! -name 'send_cirrus' ! -name 'clean' -delete
