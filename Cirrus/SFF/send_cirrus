@@ -1,0 +1,1 @@
+rsync -azP --exclude={'send_cirrus','receive_cirrus'} . ttuw@login.cirrus.ac.uk:/home/ec230/ec230/ttuw/SFF
