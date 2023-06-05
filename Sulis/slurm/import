@@ -1,0 +1,26 @@
+!/bin/bash 
+
+#SBATCH --account=su005-Watson23a
+#SBATCH --nodes=1 
+#SBATCH --ntasks-per-node=1 
+#SBATCH --exclusive 
+#SBATCH --time=00:30:00 
+#SBATCH --job-name=import 
+
+#module load
+module purge
+module load GCCcore/10.3.0 Python/3.9.5 METIS/5.1.0 openmpi/4.1.1
+
+#Path export
+export home=/home/t/ttuw_sulis/
+export PYFR_XSMM_LIBRARY_PATH=$home/PyFR/libxsmm/lib/libxsmm.so
+
+#venv activation
+source $home/PyFR/libxsmm/pyfr-venv/bin/activate
+
+#mesh convert
+pyfr import *.msh couette-flow.pyfrm
+
+#deactivation of venv
+deactivate
+
