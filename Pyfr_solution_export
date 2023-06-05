@@ -1,0 +1,22 @@
+!/bin/bash
+
+#exports all .pyfrs files in directory to .vtu files so can all be viewed
+#in Paraview
+
+#must be ran from PyFR virtual environment
+
+#first gets list of all files with .pyfrs extension (only checks top level directory)
+
+#takes mesh as argument
+mesh="*.pyfrm"
+
+pyfrsFileList=$( find -O3 -maxdepth 1 -name "*.pyfrs" )
+vtuFileList=$( find -O3 -maxdepth 1 -name "*.vtu" )
+
+for pyfrsFile in $pyfrsFileList
+  do
+    if [[ $vtuFileList != *"${pyfrsFile%.pyfrs}"* ]]; then
+      echo $pyfrsFile
+     pyfr export $mesh $pyfrsFile "${pyfrsFile%.pyfrs}.vtu"
+    fi
+done
