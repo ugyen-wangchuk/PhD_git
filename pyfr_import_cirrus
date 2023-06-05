@@ -1,0 +1,36 @@
+
+#!/bin/bash 
+
+#SBATCH --account=ec230 
+#SBATCH --nodes=1 
+#SBATCH --ntasks-per-node=1 
+#SBATCH --exclusive 
+#SBATCH --time=01:00:00 
+#SBATCH --job-name=euler 
+
+#SBATCH --partition=standard 
+#SBATCH --qos=standard
+
+#pyfr module load
+module load metis/5.1.0 gcc/8.2.0 nvidia/nvhpc-nompi/22.2 nvidia/cudnn/8.6.0-cuda-11.6 python/3.9.13
+
+#pyfr path export
+export work=/work/ec230/ec230/ttuw/
+export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/libxsmm/lib/libxsmm.so
+export PYTHONUSERBASE=/work/ec230/ec230/ttuw
+export PATH=${PYTHONUSERBASE}/bin:${PATH}
+export PYTHONPATH=${PYTHONUSERBASE}/lib/${MINICONDA3_PYTHON_LABEL}/site-packages:${PYTHONPATH}
+export XDG_CACHE_HOME=${HOME/home/work}
+
+#activation of venv
+source $work/myvenv/bin/activate
+
+#mesh convert
+pyfr import *.msh euler-vortex.pyfrm
+
+#mesh partition 
+pyfr partition 2 euler-vortex.pyfrm .
+
+#deactivation of venv
+deactivate
+
