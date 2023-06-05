@@ -9,7 +9,7 @@
 
 #module load
 module purge
-module load GCCcore/10.3.0 Python/3.9.5 METIS/5.1.0 openmpi/4.1.1
+module load GCC/10.3.0 GCCcore/10.3.0 Python/3.9.5 METIS/5.1.0 openmpi/4.1.1
 
 #Path export
 export home=/home/t/ttuw_sulis/
