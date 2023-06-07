@@ -1,1 +1,1 @@
-sync -azP ttuw@login.cirrus.ac.uk:/home/ec230/ec230/ttuw/SFF/ .
+sync -azP --info=progress2 --info=name0 ttuw@login.cirrus.ac.uk:/home/ec230/ec230/ttuw/SFF/ .
