@@ -1,1 +1,1 @@
-rsync -azP --exclude={'send_sulis','receive_sulis'} . ttuw_sulis@login.sulis.ac.uk:/home/t/ttuw_sulis/SFF
+rsync -azP --info=progress2 --info=name0 --exclude={'send_sulis','receive_sulis'} . ttuw_sulis@login.sulis.ac.uk:/home/t/ttuw_sulis/SFF
