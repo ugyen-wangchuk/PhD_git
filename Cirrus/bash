@@ -1,0 +1,29 @@
+#.bashrc
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+#export
+export home=/home/ec230/ec230/ttuw
+export work=/work/ec230/ec230/ttuw
+
+# User specific aliases and functions
+alias home="cd /home/ec230/ec230/ttuw/"
+alias work="cd /work/ec230/ec230/ttuw/"
+alias pyfr-venv="source $work/myvenv/bin/activate"
+
+#OpenFoam 9
+alias of9="module load openmpi
+source $HOME/OpenFOAM/OpenFOAM-9/etc/bashrc
+source $work/OpenFOAM/OpenFOAM-9/etc/bashrc"
+
+#PyFR
+export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/libxsmm/lib/libxsmm.so
+export PATH="$work/.local/bin:$PATH"
+
+alias loadpyfr="module load metis/5.1.0 gcc/8.2.0 nvidia/nvhpc-nompi/22.2 nvidia/cudnn/8.6.0-cuda-11.6 python/3.9.13;"
+#module load openmpi/4.1.4-cuda-11.6
+
+alias unloadpyfr="module unload python/3.9.13 nvidia/cudnn/8.6.0-cuda-11.6 nvidia/nvhpc-nompi/22.2 gcc/8.2.0 metis/5.1.0"
+#module unload openmpi/4.1.4-cuda-11.6
