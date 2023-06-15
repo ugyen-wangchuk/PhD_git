@@ -11,7 +11,7 @@
 module purge
 module load GCC/10.3.0 GCCcore/10.3.0 Python/3.9.5 METIS/5.1.0 OpenMPI/4.1.1
 
-#Path export
+#path export
 export home=/home/t/ttuw_sulis/
 export PYFR_XSMM_LIBRARY_PATH=$home/PyFR/libxsmm/lib/libxsmm.so
 
