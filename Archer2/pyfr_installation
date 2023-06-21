@@ -6,7 +6,7 @@ export work=/work/ta094/ta094/ttuw_archer
   
 % -- Tidy up from a previous install attempt - be careful if you've done stuff before!
 rm -fr $work/.local/*
-rm -fr $work/PyFR/pyfr-venv
+rm -fr $work/source/pyfr-venv
 
 % -- create .local if not present in work
 mkdir .local
@@ -33,38 +33,37 @@ export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
 pip3 install virtualenv
 
 #% -- Now, make a directory in which to store all the virtualenv files for this project
-#mkdir $work/PyFR/pyfr-venv
+#mkdir $work/source/pyfr-venv
 
 % -- Make a directory for installation of virtualenv, metis, and pyfr
-mkdir PyFR
+mkdir source
 
 % -- And set up the virtual environment to use the right version of python (as loaded above) and the virtualenv directory
 #virtualenv -p /opt/cray/pe/python/3.9.13.1/bin/python $RAW54WORKPLACE/virtualEnv-pyFR --system-site-packages
-cd PyFR
+cd source
 python3 -m virtualenv pyfr-venv
 
 % -- Activate the virtual environment
-source $work/PyFR/pyfr-venv/bin/activate
+source $work/source/pyfr-venv/bin/activate
 
 % -- Install xsmm
-cd $work/PyFR/
+cd $work/source/
 git clone https://github.com/libxsmm/libxsmm.git XSMM
 cd XSMM
 git checkout 0db15a0da13e3d9b9e3d57b992ecb3384d2e15ea
 make CCX=CC CC=cc FC=ftn STATIC=0 BLAS=0 CODE_BUF_MAXSIZE=262144
-export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/XSMM/lib/libxsmm.so
+export PYFR_XSMM_LIBRARY_PATH=$work/source/XSMM/lib/libxsmm.so
 
 % -- Install Metis instead
 #% Locate old 5.1.0 distribution (currently on OneDrive: Transfer_VMs and on the VirtualBox downloads). Can get from webarchive for now.
-#cd $RAW54WORKPLACE/Source/
 % == download metis 5.1.0 from git
 git clone git@github.com:MathieuS34/metis-5.1.0.git
 tar -xf metis-5.1.0.tar.gz
-cd metis-5.1.0
+cd $work/source/metis-5.1.0
 make config cc=cc shared=1 prefix=$RAW54WORKPLACE/Source/metis-5.1.0
 make
 make install
-export PYFR_METIS_LIBRARY_PATH=$work/PyFR/metis-5.1.0/lib/libmetis.so
+export PYFR_METIS_LIBRARY_PATH=$work/source/metis-5.1.0/lib/libmetis.so
 
 % -- Install pyFR (slightly older version for dependencies on Archer2 and Cirrus)
 #pip install --user pyfr==1.14.0
