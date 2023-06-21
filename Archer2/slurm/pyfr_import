@@ -1,0 +1,32 @@
+#!/bin/bash --login
+
+#SBATCH --job-name=pyfr
+#SBATCH --ntasks=1
+#SBATCH --time=00:20:00
+#SBATCH --account=ta094-ttuwarcher
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Set a nifty environment
+export work=/work/ta094/ta094/ttuw_archer
+
+# Swap out the compilers
+module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3
+
+# Load the Python module
+module load cray-python
+
+# Export some variables
+export PYTHONUSERBASE=$work/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
+
+export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/XSMM/lib/libxsmm.so
+export PYFR_METIS_LIBRARY_PATH=$work/PyFR/metis-5.1.0/lib/libmetis.so
+
+# If using a virtual environment
+source $work/PyFR/pyfr-venv/bin/activate
+
+# Run your Python progamme
+pyfr import couette-flow.msh couette-flow.pyfrm
+#pyfr partition -p metis 256 couette-flow.pyfrm .
