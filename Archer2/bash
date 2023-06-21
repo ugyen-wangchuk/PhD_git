@@ -1,0 +1,25 @@
+#.bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+             . /etc/bashrc
+fi
+
+#export
+export home=/home/ta094/ta094/ttuw_archer
+export work=/work/ta094/ta094/ttuw_archer
+
+#alias
+alias home="cd /home/ta094/ta094/ttuw_archer"
+alias work="cd /work/ta094/ta094/ttuw_archer"
+
+#module load openfoam/org/v9.20210903
+#source ${FOAM_INSTALL_DIR}/etc/bashrc
+
+#PyFR
+export export PYTHONUSERBASE=$work/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
+alias pyfr-venv="source $work/PyFR/pyfr-venv/bin/activate"
+export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/XSMM/lib/libxsmm.so
+export PYFR_METIS_LIBRARY_PATH=$work/PyFR/metis-5.1.0/lib/libmetis.so
