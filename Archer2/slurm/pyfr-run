@@ -20,7 +20,6 @@ module load cray-python
 export PYTHONUSERBASE=$work/.local
 export PATH=$PYTHONUSERBASE/bin:$PATH
 export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
-
 export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/XSMM/lib/libxsmm.so
 export PYFR_METIS_LIBRARY_PATH=$work/PyFR/metis-5.1.0/lib/libmetis.so
 
