@@ -7,16 +7,13 @@ export TTWORKPLACE=/work/ta094/ta094/ttuw_archer
 % -- Tidy up from a previous install attempt - be careful if you've done stuff before!
 rm -fr $TTWORKPLACE/.local/*
 rm -fr $TTWORKPLACE/source/pyfr-venv
+rm -fr $TTWORKPLACE/source/XSMM
+rm -fr $TTWORKPLACE/source/metis-5.1.0
 
-% -- create .local if not present in work (careful with the location of current directory)
-cd $TTWORKPLACE
-mkdir .local
-cd .local
-mkdir bin lib share
-cd ../
+% -- create .local if not present in work
+mkdir $TTWORKPLACE/.local
 
 % -- First, load up the cray python package (python3.9+)
-% -- Current module on Archer2 is cray-python/3.9.13.1
 module load cray-python
 % -- This package automatically points towards mpi4py and numpy
 
@@ -29,37 +26,35 @@ export PATH=$TTWORKPLACE/bin:$PATH
 export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
 
 #% -- Install virtualenv to help manage packages. --user flag ensures that it's stuck in the user base as defined above
-#pip install --user virtualenv
-% -- virtualenv installation
-pip3 install virtualenv
+pip3 install --user virtualenv
 
 % -- Make a directory for installation of virtualenv, metis, and pyfr
-mkdir source
-
-#% -- Now, make a directory in which to store all the virtualenv files for this project
-mkdir $TTWORKPLACE/source/pyfr-venv
+mkdir $TTWORKPLACE/source
 
 % -- And set up the virtual environment to use the right version of python (as loaded above) and the virtualenv directory
-#virtualenv -p /opt/cray/pe/python/3.9.13.1/bin/python $RAW54WORKPLACE/virtualEnv-pyFR --system-site-packages
-cd source
+cd $TTWORKPLACE/source
 python3 -m virtualenv pyfr-venv
 
 % -- Activate the virtual environment
 source $TTWORKPLACE/source/pyfr-venv/bin/activate
 
 % -- Install xsmm
-cd $TTWORKPLACE/source/
+cd $TTWORKPLACE/source
 git clone https://github.com/libxsmm/libxsmm.git XSMM
 cd XSMM
-git checkout 0db15a0da13e3d9b9e3d57b992ecb3384d2e15ea    #git commit of XSMM for PyFR1.15
+#git checkout 0db15a0da13e3d9b9e3d57b992ecb3384d2e15ea    #git commit of XSMM for PyFR1.15 (
 make CCX=CC CC=cc FC=ftn STATIC=0 BLAS=0   #CODE_BUF_MAXSIZE=262144 (not needed for 1.15)
 export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/source/XSMM/lib/libxsmm.so
 
 % -- Install Metis instead
 #% Locate old 5.1.0 distribution (currently on OneDrive: Transfer_VMs and on the VirtualBox downloads). Can get from webarchive for now.
 % == download metis 5.1.0 from git
+cd $TTWORKPLACE/source
 git clone git@github.com:MathieuS34/metis-5.1.0.git
+cd metis-5.1.0/
+mv metis-5.1.0.tar.gz ../
 tar -xf metis-5.1.0.tar.gz
+rm metis-5.1.0.tar.gz
 cd $TTWORKPLACE/source/metis-5.1.0
 make config cc=cc shared=1 prefix=$TTWORKPLACE/source/metis-5.1.0
 make
