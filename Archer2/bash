@@ -6,20 +6,25 @@ if [ -f /etc/bashrc ]; then
 fi
 
 #export
-export home=/home/ta094/ta094/ttuw_archer
-export work=/work/ta094/ta094/ttuw_archer
+export TTHOME=/home/ta094/ta094/ttuw_archer
+export TTWORKPLACE=/work/ta094/ta094/ttuw_archer
+export SFF=/home/ta094/ta094/ttuw_archer/SFF
 
 #alias
 alias home="cd /home/ta094/ta094/ttuw_archer"
 alias work="cd /work/ta094/ta094/ttuw_archer"
+alias SFF="cd /home/ta094/ta094/ttuw_archer/SFF"
 
+#OpenFoam
+alias of9="module load openfoam/org/v9.20210903; source ${FOAM_INSTALL_DIR}/etc/bashrc"
 #module load openfoam/org/v9.20210903
 #source ${FOAM_INSTALL_DIR}/etc/bashrc
 
 #PyFR
-export PYTHONUSERBASE=$work/.local
+export PYTHONUSERBASE=$TTWORKPLACE/.local
 export PATH=$PYTHONUSERBASE/bin:$PATH
 export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
-alias pyfr-venv="source $work/PyFR/pyfr-venv/bin/activate"
-export PYFR_XSMM_LIBRARY_PATH=$work/PyFR/XSMM/lib/libxsmm.so
-export PYFR_METIS_LIBRARY_PATH=$work/PyFR/metis-5.1.0/lib/libmetis.so
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/PyFR/XSMM/lib/libxsmm.so
+export PYFR_METIS_LIBRARY_PATH=$TTWORKPLACE/PyFR/metis-5.1.0/lib/libmetis.so
+alias pyfr-venv="source $TTWORKPLACE/source/pyfr-venv/bin/activate"
+alias loadpyfr="module load cray-python; module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3"
