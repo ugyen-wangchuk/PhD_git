@@ -1,0 +1,60 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig, axs = plt.subplots(2, 1, figsize=(10, 6), layout='constrained')
+dataframe = pd.read_csv('residual.csv')
+title = 'Forwardstep_2.8'
+fig.suptitle(title, fontsize = 18)
+
+#Plots
+axs[0].plot(dataframe["t"], dataframe["rho"], color='blue', linewidth=1, label='Rho')
+axs[0].plot(dataframe["t"], dataframe["rhou"], color='red', linewidth=1, label='Rhou')
+axs[0].plot(dataframe["t"], dataframe["rhov"], color='green', linewidth=1, label='Rhov')
+
+axs[1].plot(dataframe["t"], dataframe["E"], color='orange', linewidth=1, label='E')
+
+#Axes options
+xmin0 = 0
+xmax0 = 0.65
+xtick0 = 0.05
+ymin0 = 0
+ymax0 = 4e5
+ytick0 = 5e4
+yscale0 = 5
+
+xmin1 = 0
+xmax1 = 0.65
+xtick1 = 0.05
+ymin1 = 0
+ymax1 = 4e6
+ytick1 = 5e5
+yscale1 = 6
+
+#Plot0 Settings
+#axs[0].set_title('Residuals (Rho)', fontsize=15, color='black')
+axs[0].grid(True)
+axs[0].legend(loc='upper right', fontsize=14)
+axs[0].ticklabel_format(axis='y', style='sci', scilimits=(yscale0, yscale0))
+axs[0].set_xlabel('Timesteps', fontsize=14, color='black')
+axs[0].set_xlim(xmin0, xmax0)
+axs[0].set_xticks(np.arange(xmin0, xmax0, xtick0))
+axs[0].set_ylabel('Residuals (Rho)', fontsize=14, color='black')
+axs[0].set_ylim(ymin0, ymax0)
+axs[0].set_yticks(np.arange(ymin0, ymax0, ytick0))
+
+#Plot1 Settings
+#axs[1].set_title('Residuals (E)', fontsize=15, color='black')
+axs[1].grid(True)
+axs[1].legend(loc='upper right', fontsize=14)
+axs[1].ticklabel_format(axis='y', style='sci', scilimits=(yscale1, yscale1))
+axs[1].set_xlabel('Timesteps', fontsize=14, color='black')
+axs[1].set_xlim(xmin1, xmax1)
+axs[1].set_xticks(np.arange(xmin1, xmax1, xtick1))
+axs[1].set_ylabel('Residuals (E)', fontsize=14, color='black')
+axs[1].set_ylim(ymin1, ymax1)
+axs[1].set_yticks(np.arange(ymin1, ymax1, ytick1))
+
+#Output
+plt.savefig('fs2d-2.8-residuals.png')
+print(dataframe)
