@@ -1,0 +1,66 @@
+Archer2 - PyFR install
+======================
+
+% -- Set an environment variable just for me
+export TTWORKPLACE=/work/ta094/ta094/ttuw_archer
+
+% -- Tidy up from a previous install attempt - be careful if you've done stuff before!
+rm -fr $TTWORKPLACE/.local/*
+rm -fr $TTWORKPLACE/source/pyfr-venv
+rm -fr $TTWORKPLACE/source/XSMM
+rm -fr $TTWORKPLACE/source/metis-5.1.0
+
+% -- create .local if not present in work
+mkdir $TTWORKPLACE/.local
+
+% -- First, load up the cray python package (python3.9+)
+module load cray-python
+% -- This package automatically points towards mpi4py and numpy
+
+% -- Python build against GCC, so swap
+module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3
+
+% -- Now, need to make sure that pip, etc. are pointing to /work rather than to /home (obviously modify location per user/group)
+export PYTHONUSERBASE=$TTWORKPLACE/.local
+export PATH=$TTWORKPLACE/bin:$PATH
+export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
+
+#% -- Install virtualenv to help manage packages. --user flag ensures that it's stuck in the user base as defined above
+pip3 install --user virtualenv
+
+% -- Make a directory for installation of virtualenv, metis, and pyfr
+mkdir $TTWORKPLACE/source
+
+% -- And set up the virtual environment to use the right version of python (as loaded above) and the virtualenv directory
+cd $TTWORKPLACE/source
+python3 -m virtualenv pyfr-venv
+
+% -- Activate the virtual environment
+source $TTWORKPLACE/source/pyfr-venv/bin/activate
+
+% -- Install xsmm
+cd $TTWORKPLACE/source
+git clone https://github.com/libxsmm/libxsmm.git XSMM
+cd XSMM
+#git checkout 0db15a0da13e3d9b9e3d57b992ecb3384d2e15ea    #git commit of XSMM for PyFR1.15 (
+make CCX=CC CC=cc FC=ftn STATIC=0 BLAS=0   #CODE_BUF_MAXSIZE=262144 (not needed for 1.15)
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/source/XSMM/lib/libxsmm.so
+
+% -- Install Metis instead
+#% Locate old 5.1.0 distribution (currently on OneDrive: Transfer_VMs and on the VirtualBox downloads). Can get from webarchive for now.
+% == download metis 5.1.0 from git
+cd $TTWORKPLACE/source
+git clone git@github.com:MathieuS34/metis-5.1.0.git
+cd metis-5.1.0/
+mv metis-5.1.0.tar.gz ../
+tar -xf metis-5.1.0.tar.gz
+rm metis-5.1.0.tar.gz
+cd $TTWORKPLACE/source/metis-5.1.0
+make config cc=cc shared=1 prefix=$TTWORKPLACE/source/metis-5.1.0
+make
+make install
+export PYFR_METIS_LIBRARY_PATH=$TTWORKPLACE/source/metis-5.1.0/lib/libmetis.so
+
+% -- Install pyFR (slightly older version for dependencies on Archer2 and Cirrus)
+#pip install --user pyfr==1.14.0
+pip install pyfr
