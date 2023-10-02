@@ -2,7 +2,7 @@ Archer2 - PyFR install
 ======================
 
 % -- Set an environment variable just for me
-export TTWORKPLACE=/work/ta094/ta094/ttuw_archer
+export TTWORKPLACE=/work/e01/e01/ttuw_archer2
 
 % -- Tidy up from a previous install attempt - be careful if you've done stuff before!
 rm -fr $TTWORKPLACE/.local/*
