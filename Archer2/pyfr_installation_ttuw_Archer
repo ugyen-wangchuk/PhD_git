@@ -61,5 +61,6 @@ make install
 export PYFR_METIS_LIBRARY_PATH=$TTWORKPLACE/source/metis-5.1.0/lib/libmetis.so
 
 % -- Install pyFR (slightly older version for dependencies on Archer2 and Cirrus)
+cd $TTWORKPLACE/source/
 #pip install --user pyfr==1.14.0
 pip install pyfr
