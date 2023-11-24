@@ -22,7 +22,7 @@ module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3
 
 % -- Now, need to make sure that pip, etc. are pointing to /work rather than to /home (obviously modify location per user/group)
 export PYTHONUSERBASE=$TTWORKPLACE/.local
-export PATH=$TTWORKPLACE/bin:$PATH
+export PATH=$PYTHONUSERBASE/bin:$PATH
 export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
 
 #% -- Install virtualenv to help manage packages. --user flag ensures that it's stuck in the user base as defined above
