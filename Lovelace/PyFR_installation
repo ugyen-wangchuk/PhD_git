@@ -22,7 +22,7 @@ mkdir $TTWORKPLACE/.local/lib/python3.10.8/site-packages
 mkdir $TTWORKPLACE/source
 
 % -- First, load up the python package (python3.9+)
-module load python
+module load Python
 % -- This package automatically points towards mpi4py and numpy
 
 % -- load up CMake module for installation as well
