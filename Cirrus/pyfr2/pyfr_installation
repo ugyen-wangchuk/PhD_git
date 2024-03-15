@@ -1,0 +1,52 @@
+#PyFR2 Install on Archer2
+
+#export
+export TTWORKPLACE=/work/ec265/ec265/ttuw_cirrus
+
+
+#Install Conda to manage Python installation
+#Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
+#Get Conda from https://docs.anaconda.com/free/miniconda/
+#Conda Installation
+cd [conda install directory]
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash <conda-installer-name>-latest-Linux-x86_64.sh
+
+#Creating environment in Conda
+conda create -n <env-name>
+#Exit and re-entershell
+#use 'conda deactivate' to get out of conda environment
+#Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
+#To list all conda environments
+conda info --envs
+#To remove conda environment
+conda remove --name <env-name> --all
+
+#Installing Python
+conda activate <env-name>
+conda install python
+#check the python version is 3.10+ for pyfr2
+#say 'y'
+
+#compile libxsmm
+git clone https://github.com/libxsmm/libxsmm.git
+cd libxsmm
+git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+make -j4 STATIC=0 BLAS=0
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/source/pyFRv2.0/libxsmm/lib/libxsmm.so
+cd ../
+
+#compile scotch7.0 library
+#https://docs.archer2.ac.uk/software-libraries/scotch/
+# '-DBUILD_SHARED_LIBS=ON'
+wget https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.4/scotch-v7.0.4.tar.gz
+tar -xf scotch-v7.0.4.tar.gz
+rm scotch-v7.0.4.tar.gz
+cd scotch-v7.0.4
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DCMAKE_Fortran_COMPILER=ftn -DCMAKE_VERBOSE_MAKEFILE=1 -DMPI_THREAD_MULTIPLE:BOOL=OFF -DTHREADS:BOOL=OFF -DBUILD_LIBSCOTCHMETIS:BOOL=OFF -DBUILD_SHARED_LIBS=ON ..
+make
+export PYFR_SCOTCH_LIBRARY_PATH=$TTWORKPLACE/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
+
+#Install pyfr
+pip install pyfr==v2.0.0
