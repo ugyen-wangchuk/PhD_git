@@ -1,18 +1,20 @@
 #PyFR2 Install on Archer2
 
 #export
-export TTWORKPLACE=/work/ec265/ec265/ttuw_cirrus
-
+export TTWORKPLACE=/work/ec265/ec265/ttuw_cirrus1
+export TTSSS=/scratch/space1/ec265/ttuw_cirrus1
 
 #Install Conda to manage Python installation
 #Refer to https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
 #Get Conda from https://docs.anaconda.com/free/miniconda/
-#Conda Installation
+#Conda Installation. Ensure the installation is on solid state storage (TTSSS)
 cd [conda install directory]
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash <conda-installer-name>-latest-Linux-x86_64.sh
+bash <conda-installer-name>-latest-Linux-x86_64.sh -
+#when prompted to change install directory. Change to install directory in solid state storage
+/scratch/space1/ec265/ttuw_cirrus1/source/miniconda3
 
-#Creating environment in Conda
+#Creating environment in Conda (set env-name as 'pyfr2')
 conda create -n <env-name>
 #Exit and re-entershell
 #use 'conda deactivate' to get out of conda environment
@@ -27,6 +29,12 @@ conda activate <env-name>
 conda install python
 #check the python version is 3.10+ for pyfr2
 #say 'y'
+
+#install gcc 12 + using conda
+conda install -c conda-forge gcc
+
+#install cmake using conda
+conda install anaconda::cmake
 
 #compile libxsmm
 git clone https://github.com/libxsmm/libxsmm.git
