@@ -28,6 +28,7 @@ tar -xf scotch-v7.0.4.tar.gz
 rm scotch-v7.0.4.tar.gz
 cd scotch-v7.0.4
 mkdir build && cd build
-cmake -DBUILD_SHARED_LIBS=ON ..
+cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DCMAKE_Fortran_COMPILER=ftn -DCMAKE_VERBOSE_MAKEFILE=1 -DMPI_THREAD_MULTIPLE:BOOL=OFF -DTHREADS:BOOL=OFF -DBUILD_LIBSCOTCHMETIS:BOOL=OFF -DBUILD_SHARED_LIBS=ON ..
+
 make
 export PYFR_SCOTCH_LIBRARY_PATH=$SSS/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
