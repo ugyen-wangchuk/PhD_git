@@ -1,0 +1,41 @@
+export SSS=/scratch/space1/ec265/ttuw_cirrus1
+
+mkdir source
+cd source
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+#conda installation directory: /scratch/space1/ec265/ttuw_cirrus1/source/miniconda3
+conda create -n pyfr2
+conda activate pyfr2
+conda install python
+
+conda install conda-forge::fortran-compiler
+conda install -c conda-forge gxx
+conda install conda-forge::mpich
+conda install anaconda::cmake
+conda install bison
+conda install conda-forge::scotch
+
+cd $SSS/source && mkdir pyFRv2.0 && cd pyFRv2.0
+
+git clone https://github.com/libxsmm/libxsmm.git
+cd libxsmm
+git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+make -j4 STATIC=0 BLAS=0
+export PYFR_XSMM_LIBRARY_PATH=$SSS/source/pyFRv2.0/libxsmm/lib/libxsmm.so
+cd ../
+
+pip install pyfr
+
+
+wget https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.4/scotch-v7.0.4.tar.gz
+tar -xf scotch-v7.0.4.tar.gz && rm scotch-v7.0.4.tar.gz && cd scotch-v7.0.4
+mkdir build && cd build
+#cmake -DBUILD_SHARED_LIBS=ON ..
+cmake -DCMAKE_VERBOSE_MAKEFILE=1 -DMPI_THREAD_MULTIPLE:BOOL=OFF -DTHREADS:BOOL=OFF -DBUILD_LIBSCOTCHMETIS:BOOL=OFF -DBUILD_SHARED_LIBS=ON ..
+#cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DCMAKE_Fortran_COMPILER=ftn -DCMAKE_VERBOSE_MAKEFILE=1 -DMPI_THREAD_MULTIPLE:BOOL=OFF -DTHREADS:BOOL=OFF -DBUILD_LIBSCOTCHMETIS:BOOL=OFF -DBUILD_SHARED_LIBS=ON ..
+make
+export PYFR_SCOTCH_LIBRARY_PATH=$SSS/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
+#export PYFR_SCOTCH_LIBRARY_PATH=/scratch/space1/ec265/ttuw_cirrus1/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
+
+
