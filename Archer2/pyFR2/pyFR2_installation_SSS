@@ -5,7 +5,7 @@ cd source
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash <conda-installer-name>-latest-Linux-x86_64.sh
 #conda installation directory: /mnt/lustre/a2fs-nvme/work/ta094/ta094/ttuw_archer/source/miniconda3
-conda create -n pyfr2
+conda create -n pyfr2 && y
 conda activate pyfr2
 conda install python
 
