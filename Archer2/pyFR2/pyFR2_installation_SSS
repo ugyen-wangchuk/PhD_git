@@ -1,0 +1,33 @@
+export SSS=/mnt/lustre/a2fs-nvme/work/ta094/ta094/ttuw_archer
+
+/mnt/lustre/a2fs-nvme/work/ta094/ta094/ttuw_archer/source/miniconda3
+
+mkdir source
+cd source
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash <conda-installer-name>-latest-Linux-x86_64.sh
+
+conda create -n pyfr2
+conda activate pyfr2
+conda install python
+
+module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3
+
+cd source
+mkdir pyFRv2.0
+cd pyFRv2.0
+git clone https://github.com/libxsmm/libxsmm.git
+cd libxsmm
+git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+make -j4 STATIC=0 BLAS=0
+export PYFR_XSMM_LIBRARY_PATH=$SSS/source/pyFRv2.0/libxsmm/lib/libxsmm.so
+cd ../
+
+wget https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.4/scotch-v7.0.4.tar.gz
+tar -xf scotch-v7.0.4.tar.gz
+rm scotch-v7.0.4.tar.gz
+cd scotch-v7.0.4
+mkdir build && cd build
+cmake -DBUILD_SHARED_LIBS=ON ..
+make
+export PYFR_SCOTCH_LIBRARY_PATH=$SSS/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
