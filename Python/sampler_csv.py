@@ -24,7 +24,7 @@ with open('bottom.csv') as csv_file:
     print("Total rows = ", f"{numline:,}")
 
 print("Splitting csv file")
-
+#splitting csv files into smaller csv based on row_range
 df = pd.read_csv('bottom.csv')
 range_size = 701
 n = 0
