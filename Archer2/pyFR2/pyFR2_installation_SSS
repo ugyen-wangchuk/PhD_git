@@ -39,4 +39,3 @@ pip install pyfr
 #make
 #export PYFR_SCOTCH_LIBRARY_PATH=$SSS/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
 
-pip install pyfr
