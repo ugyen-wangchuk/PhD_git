@@ -5,13 +5,12 @@ cd source
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash <conda-installer-name>-latest-Linux-x86_64.sh
 #conda installation directory: /mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2/source/miniconda3
-conda create -n pyfr2
-conda activate pyfr2
+
+#module unload PrgEnv-cray/8.3.3
+
 conda install python
-
-module unload PrgEnv-cray/8.3.3
-
-conda install -c conda-forge gxx conda-forge::fortran-compiler conda-forge::mpich conda-forge::scotch
+conda install -c conda-forge gxx 
+conda install conda-forge::fortran-compiler conda-forge::mpich conda-forge::scotch
 
 cd $SSS/source && mkdir pyFRv2.0 && cd pyFRv2.0
 
