@@ -1,23 +1,17 @@
-export SSS=/mnt/lustre/a2fs-nvme/work/ta094/ta094/ttuw_archer
+export SSS=/mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2
 
 mkdir source
 cd source
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash <conda-installer-name>-latest-Linux-x86_64.sh
-#conda installation directory: /mnt/lustre/a2fs-nvme/work/ta094/ta094/ttuw_archer/source/miniconda3
+#conda installation directory: /mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2/source/miniconda3
 conda create -n pyfr2
 conda activate pyfr2
 conda install python
 
 module unload PrgEnv-cray/8.3.3
-#module swap PrgEnv-cray/8.3.3 PrgEnv-gnu/8.3.3
-#module unload gcc/11.2.0 cray-mpich
 
-#conda install -c conda-forge gcc
-conda install -c conda-forge gxx
-conda install conda-forge::fortran-compiler
-conda install conda-forge::mpich
-conda install conda-forge::scotch
+conda install -c conda-forge gxx conda-forge::fortran-compiler conda-forge::mpich conda-forge::scotch
 
 cd $SSS/source && mkdir pyFRv2.0 && cd pyFRv2.0
 
@@ -29,13 +23,3 @@ export PYFR_XSMM_LIBRARY_PATH=$SSS/source/pyFRv2.0/libxsmm/lib/libxsmm.so
 cd ../
 
 pip install pyfr
-
-#Following is installation of scotch but this has been substituted with conda installation of scotch
-#wget https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.4/scotch-v7.0.4.tar.gz
-#tar -xf scotch-v7.0.4.tar.gz && rm scotch-v7.0.4.tar.gz && cd scotch-v7.0.4
-#mkdir build && cd build
-#cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_Fortran_COMPILER=ftn -DCMAKE_VERBOSE_MAKEFILE=1 -DMPI_THREAD_MULTIPLE:BOOL=OFF -DTHREADS:BOOL=OFF -DBUILD_LIBSCOTCHMETIS:BOOL=OFF -DBUILD_SHARED_LIBS=ON ..
-#cmake -DBUILD_SHARED_LIBS=ON ..
-#make
-#export PYFR_SCOTCH_LIBRARY_PATH=$SSS/source/pyFRv2.0/scotch-v7.0.4/build/lib/libscotch.so
-
