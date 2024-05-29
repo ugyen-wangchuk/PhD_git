@@ -1,24 +1,31 @@
-export SSS=/mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2
+pyfr installation
 
-mkdir source
-cd source
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash <conda-installer-name>-latest-Linux-x86_64.sh
-#conda installation directory: /mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2/source/miniconda3
+#add the export in bash file
+export source=/mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2/source
 
-#module unload PrgEnv-cray/8.3.3
+cd $source
+mkdir -p miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.11.0-2-Linux-x86_64.sh -O $source/miniconda3/miniconda.sh
+bash $source/miniconda3/miniconda.sh -b -u -p $source/miniconda3
+export PYTHONPATH=$source/miniconda3:$PYTHONPATH
+rm -rf $source/miniconda3/miniconda.sh
 
-conda install python
-conda install -c conda-forge gxx 
-conda install conda-forge::fortran-compiler conda-forge::mpich conda-forge::scotch
+#run 'conda init' and exit shell, run following on new shell
+
+module unload PrgEnv-cray/8.3.3
+
+#add conda-forge channel for some of the packages
+#conda config --add channels conda-forge
+
+conda install python==3.12.0 gxx==12.1.0 fortran-compiler==1.6.0 mpich==4.2.0 scotch==7.0.3
+
+export LD_LIBRARY_PATH=$source/miniconda3/lib:$LD_LIBRARY_PATH
 
 cd $SSS/source && mkdir pyFRv2.0 && cd pyFRv2.0
 
-git clone https://github.com/libxsmm/libxsmm.git
-cd libxsmm
-git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm && git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
 make -j4 STATIC=0 BLAS=0
-export PYFR_XSMM_LIBRARY_PATH=$SSS/source/pyFRv2.0/libxsmm/lib/libxsmm.so
+export PYFR_XSMM_LIBRARY_PATH=$source/pyFRv2.0/libxsmm/lib/libxsmm.so
 cd ../
 
-pip install pyfr
+pip install pyfr==v2.0.1
