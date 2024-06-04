@@ -1,4 +1,4 @@
-pyfr installation
+#pyfr installation
 
 #add the export in bash file
 export PYFR_SOURCE=/mnt/lustre/a2fs-nvme/work/e01/e01/ttuw_archer2/source
