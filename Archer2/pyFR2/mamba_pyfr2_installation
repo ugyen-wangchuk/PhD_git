@@ -1,0 +1,48 @@
+#pyFR2.0 installation on Archer2
+
+export PYFR_SOURCE=/work/e01/e01/ttuw_archer2/source
+
+#mamba installation
+
+cd $PYFR_SOURCE/pyFRv2.0/
+wget https://github.com/conda-forge/miniforge/releases/download/24.3.0-0/Mambaforge-24.3.0-0-Linux-x86_64.sh
+bash Mambaforge-24.3.0-0-Linux-x86_64.sh
+#install location: /work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
+#add following line to bashscritp
+#alias mamba_activate="source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/conda.sh; source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/mamba.sh; mamba activate"
+mamba_activate
+mamba create -n pyFRv2.0
+mamba activate pyFRv2.0
+
+export PYTHONPATH=$PYFR_SOURCE/pyFRv2.0/mambaforge:$PYTHONPATH
+export PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin:$PATH
+
+#to search mamba packages
+#mamba search package-name or mamba search '*package-name'
+
+mamba install python==3.10.14 
+mamba install gxx==12.3.0 
+mamba install fortran-compiler==1.6.0 
+mamba install mpich==4.2.1 
+mamba install metis==5.2.1
+
+git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm
+git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+make -j4 STATIC=0 BLAS=0
+export PYFR_XSMM_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/libxsmm/lib/libxsmm.so
+export PYFR_METIS_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/envs/pyFRv2.0/lib/libmetis.so
+cd $PYFR_SOURCE
+
+pip install pyfr==v2.0.1
+
+#Extra-notes
+#pyfr mpi4py=3.1.6
+#pip uninstall mpi4py
+#python -m pip cache remove mpi4py
+#env MPICC=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin/mpicc python -m pip install mpi4py
+
+#micromamba activate /mnt/lustre/a2fs-work1/work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
+#micromamba run -p /mnt/lustre/a2fs-work1/work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
+#/work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
+#conda config --set auto_activate_base false
+#conda init --reverse $SHELL
