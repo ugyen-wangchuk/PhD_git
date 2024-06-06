@@ -18,7 +18,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
 
 #pyFR1.15
-#export PATH=$PYTHONUSERBASE/bin:$PATH
+#export PYTHONUSERBASE=$TTWORKPLACE/.local
 #export PATH=$PYTHONUSERBASE/bin:$PATH
 #export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
 #export PYFR_XSMM_LIBRARY_PATH=$PYFR_SOURCE/pyFRv1.15/libxsmm/lib/libxsmm.so
