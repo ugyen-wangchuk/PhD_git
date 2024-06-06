@@ -1,6 +1,6 @@
 #!/bin/bash --login
 
-#SBATCH --job-name=2d_sbli_e
+#SBATCH --job-name=e_3d_s_d
 #SBATCH --ntasks=1
 #SBATCH --time=00:20:00
 #SBATCH --account=e01-Lough-Su
@@ -18,16 +18,15 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
 
 #pyFR1.15
-#export PYTHONUSERBASE=$work/.local
+#export PATH=$PYTHONUSERBASE/bin:$PATH
 #export PATH=$PYTHONUSERBASE/bin:$PATH
 #export PYTHONPATH=$PYTHONUSERBASE/lib/python3.9/site-packages:$PYTHONPATH
 #export PYFR_XSMM_LIBRARY_PATH=$PYFR_SOURCE/pyFRv1.15/libxsmm/lib/libxsmm.so
 #export PYFR_METIS_LIBRARY_PATH=$PYFR_SOURCE/pyFRv1.15/metis-5.1.0/lib/libmetis.so
 #source $PYFR_SOURCE/pyFRv1.15/pyfr-venv/bin/activate
 
-#pyFR2.0.2
+#pyFR2.0
 export PYTHONPATH=$PYFR_SOURCE/pyFRv2.0/mambaforge:$PYTHONPATH
-#export LD_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/lib:$LD_LIBRARY_PATH
 export PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin:$PATH
 export PYFR_XSMM_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/libxsmm/lib/libxsmm.so
 export PYFR_METIS_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/envs/pyFRv2.0/lib/libmetis.so
@@ -35,8 +34,10 @@ source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/conda.sh
 source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/mamba.sh 
 mamba activate pyFRv2.0
 
-pyfr import double-mach-reflection.msh double-mach-reflection.pyfrm
-
-pyfr partition 8 double-mach-reflection.pyfrm .
-
 pyfr --version
+
+pyfr import 3d_sbli_h_d.msh 3d_sbli_h_d.pyfrm 
+
+pyfr partition 320 3d_sbli_h_d.pyfrm  .
+
+echo 'Import Complete'
