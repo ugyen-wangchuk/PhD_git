@@ -8,7 +8,7 @@ cd $PYFR_SOURCE/pyFRv2.0/
 wget https://github.com/conda-forge/miniforge/releases/download/24.3.0-0/Mambaforge-24.3.0-0-Linux-x86_64.sh
 bash Mambaforge-24.3.0-0-Linux-x86_64.sh
 #install location: /work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
-#add following line to bashscritp
+#add following line to bashscript
 #alias mamba_activate="source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/conda.sh; source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/mamba.sh; mamba activate"
 mamba_activate
 mamba create -n pyFRv2.0
