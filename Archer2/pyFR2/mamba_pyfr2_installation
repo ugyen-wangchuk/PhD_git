@@ -33,7 +33,7 @@ export PYFR_XSMM_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/libxsmm/lib/libxsmm.so
 export PYFR_METIS_LIBRARY_PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/envs/pyFRv2.0/lib/libmetis.so
 cd $PYFR_SOURCE
 
-pip install pyfr==v2.0.1
+pip install pyfr==v2.0.3
 
 #Extra-notes (to avoid srun incompatibility)
 #pyfr mpi4py=3.1.6
