@@ -35,7 +35,7 @@ cd $PYFR_SOURCE
 
 pip install pyfr==v2.0.3
 
-#Extra-notes (to avoid srun incompatibility)
+#Extra-notes
 #pyfr mpi4py=3.1.6
 #pip uninstall mpi4py
 #python -m pip cache remove mpi4py
