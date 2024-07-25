@@ -13,6 +13,7 @@ bash Mambaforge-24.3.0-0-Linux-x86_64.sh
 mamba_activate
 mamba create -n pyFRv2.0
 mamba activate pyFRv2.0
+#mamba env remove -n env_name to remove the environment
 
 export PYTHONPATH=$PYFR_SOURCE/pyFRv2.0/mambaforge:$PYTHONPATH
 export PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin:$PATH
