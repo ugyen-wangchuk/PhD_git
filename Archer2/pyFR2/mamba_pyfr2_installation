@@ -8,12 +8,17 @@ cd $PYFR_SOURCE/pyFRv2.0/
 wget https://github.com/conda-forge/miniforge/releases/download/24.3.0-0/Mambaforge-24.3.0-0-Linux-x86_64.sh
 bash Mambaforge-24.3.0-0-Linux-x86_64.sh
 #install location: /work/e01/e01/ttuw_archer2/source/pyFRv2.0/mambaforge
-#add following line to bashscript
-#alias mamba_activate="source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/conda.sh; source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/mamba.sh; mamba activate"
+#say yes to conda init
+#implement the following command on re-entering shell to prevent mamba from reinitiating
+#conda config --set auto_activate_base false
 mamba_activate
 mamba create -n pyFRv2.0
 mamba activate pyFRv2.0
 #mamba env remove -n env_name to remove the environment
+
+
+#add following line to bashscript
+#alias mamba_activate="source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/conda.sh; source $PYFR_SOURCE/pyFRv2.0/mambaforge/etc/profile.d/mamba.sh; mamba activate; mamba activate pyFRv2.0"
 
 export PYTHONPATH=$PYFR_SOURCE/pyFRv2.0/mambaforge:$PYTHONPATH
 export PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin:$PATH
