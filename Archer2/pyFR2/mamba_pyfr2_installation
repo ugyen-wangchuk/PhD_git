@@ -27,11 +27,13 @@ export PATH=$PYFR_SOURCE/pyFRv2.0/mambaforge/bin:$PATH
 #to search mamba packages
 #mamba search package-name or mamba search '*package-name'
 
-mamba install python==3.10.14 
-mamba install gxx==12.3.0 
-mamba install fortran-compiler==1.6.0 
-mamba install mpich==4.2.1 
-mamba install metis==5.2.1
+mamba install python==3.10.14 gxx==12.3.0 fortran-compiler==1.6.0 mpich==4.2.1 metis==5.2.1 -y
+
+#mamba install python==3.10.14 
+#mamba install gxx==12.3.0 
+#mamba install fortran-compiler==1.6.0 
+#mamba install mpich==4.2.1 
+#mamba install metis==5.2.1
 
 cd $PYFR_SOURCE/pyFRv2.0/
 git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm
