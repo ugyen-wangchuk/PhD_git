@@ -11,7 +11,7 @@ bash Mambaforge-24.3.0-0-Linux-x86_64.sh
 #say yes to conda init
 #implement the following command on re-entering shell to prevent mamba from reinitiating
 #conda config --set auto_activate_base false
-mamba_activate
+
 mamba create -n pyFRv2.0
 mamba activate pyFRv2.0
 #mamba env remove -n env_name to remove the environment
