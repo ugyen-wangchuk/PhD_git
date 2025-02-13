@@ -25,6 +25,8 @@ wget https://github.com/conda-forge/miniforge/releases/download/24.3.0-0/Mambafo
     echo no
 } | bash ./Mambaforge-24.3.0-0-Linux-x86_64.sh
 
+rm Mambaforge-24.3.0-0-Linux-x86_64.sh
+
 source $install_directory/mambaforge/etc/profile.d/conda.sh; 
 source $install_directory/mambaforge/etc/profile.d/mamba.sh;
 mamba activate
@@ -37,6 +39,7 @@ mamba create -n $mamba_env_name
 mamba activate $mamba_env_name
 
 mamba install python==3.10.14 gxx==12.3.0 fortran-compiler==1.6.0 mpich==4.2.1 metis==5.2.1 -y
+
 git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm
 git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
 make -j4 STATIC=0 BLAS=0
@@ -49,12 +52,14 @@ echo 'Installation complete'
 
 export file_output='scripts_for_bash'
 touch $file_output
-echo -e '\n'Copy lines from $directory_name/scripts_for_bash.txt to bashrc or bash_aliases file'\n'
+echo -e '\n'Copy lines from $file_output to bashrc or bash_aliases file'\n'
 echo export install_directory=$install_directory >> $file_output
 echo export PYTHONPATH='$install_directory'/mambaforge:'$PYTHONPATH' >> $file_output
 echo export PATH='$install_directory'/mambaforge/bin:'$PATH' >> $file_output
 echo export PYFR_XSMM_LIBRARY_PATH='$install_directory'/libxsmm/lib/libxsmm.so >> $file_output
 echo export PYFR_METIS_LIBRARY_PATH='$install_directory'/mambaforge/envs/$mamba_env_name/lib/libmetis.so >> $file_output
 echo 'alias mamba_'$mamba_env_name'="source '$install_directory'/mambaforge/etc/profile.d/conda.sh; source '$install_directory'/mambaforge/etc/profile.d/mamba.sh; mamba activate; mamba activate '$mamba_env_name'" ' >> $file_output
+echo 'alias mamba_deactivate="mamba deactivate; mamba deactivate;"' >> $file_output 
 
 echo Use mamba_$mamba_env_name to activate the mamba environment.
+echo Use mamba_deactivate to deactivate the mamba environment.
