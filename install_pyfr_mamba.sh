@@ -35,7 +35,6 @@ echo Name of mamba_environment?:
 read mamba_env_name
 mamba create -n $mamba_env_name
 mamba activate $mamba_env_name
-mamba env remove -n $mamba_env_name
 
 mamba install python==3.10.14 gxx==12.3.0 fortran-compiler==1.6.0 mpich==4.2.1 metis==5.2.1 -y
 git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm
@@ -57,3 +56,5 @@ echo export PATH='$install_directory'/mambaforge/bin:'$PATH' >> $file_output
 echo export PYFR_XSMM_LIBRARY_PATH='$install_directory'/libxsmm/lib/libxsmm.so >> $file_output
 echo export PYFR_METIS_LIBRARY_PATH='$install_directory'/mambaforge/envs/$mamba_env_name/lib/libmetis.so >> $file_output
 echo 'alias mamba_'$mamba_env_name'="source '$install_directory'/mambaforge/etc/profile.d/conda.sh; source '$install_directory'/mambaforge/etc/profile.d/mamba.sh; mamba activate; mamba activate '$mamba_env_name'" ' >> $file_output
+
+echo Use mamba_$mamba_env_name to activate the mamba environment.
