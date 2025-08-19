@@ -1,0 +1,31 @@
+#PyFR2 installation on Archer2
+
+module load PrgEnv-gnu
+module load cray-python/3.10.10
+module load extra-compilers #loads GCC/12+
+module load scotch/7.0.3
+
+export TTWORKPLACE=/work/e01/e01/ttuw_archer2
+mkdir $TTWORKPLACE/source && cd $TTWORKPLACE/source
+python -m venv --system-site-packages $TTWORKPLACE/source/py_venv
+source $TTWORKPLACE/source/py_venv/bin/activate
+export PATH=$TTWORKPLACE/source/py_venv/bin:$PATH
+
+cd $TTWORKPLACE/source
+mkdir pyFRv2.1 && cd pyFRv2.1
+git clone https://github.com/libxsmm/libxsmm.git && cd libxsmm
+git checkout bf5313db8bf2edfc127bb715c36353e610ce7c04
+make -j4 STATIC=0 BLAS=0
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/source/pyFRv2.1/libxsmm/lib/libxsmm.so
+
+cd $TTWORKPLACE/source
+wget https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.8/scotch-v7.0.8.tar.gz
+tar -xf scotch-v7.0.8.tar.gz && rm scotch-v7.0.8.tar.gz
+cd scotch-v7.0.8/
+mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make -j5
+export PYFR_SCOTCH_LIBRARY_PATH=$TTWORKPLACE/source/scotch-v7.0.8/build/lib/libscotch.so
+
+cd $TTWORKPLACE/source/pyFRv2.1
+
+python -m pip install numpy==1.26.4
+pip install pyfr==v2.1
