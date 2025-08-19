@@ -1,0 +1,31 @@
+#!/bin/bash --login
+
+#SBATCH --job-name=2d_sbli_e
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=32
+#SBATCH --time=00:20:00
+#SBATCH --account=e01-Lough-Su
+#SBATCH --partition=standard
+#SBATCH --qos=short
+
+module load PrgEnv-gnu
+module load cray-python/3.10.10
+module load extra-compilers
+module load scotch/7.0.3
+
+#For srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_PLACES=cores
+
+#pyFR
+export TTWORKPLACE=/work/e01/e01/ttuw_archer2
+export PATH=$TTWORKPLACE/py_venv/bin:$PATH
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/py_venv/pyFRv2.1/libxsmm/lib/libxsmm.so
+export PYFR_SCOTCH_LIBRARY_PATH=$TTWORKPLACE/py_venv/scotch-v7.0.8/build/lib/libscotch.so
+source $TTWORKPLACE/py_venv/bin/activate
+
+pyfr --version
+
+srun --distribution=block:block --hint=nomultithread pyfr -p run -b openmp double-mach-reflection.pyfrm double-mach-reflection.ini
