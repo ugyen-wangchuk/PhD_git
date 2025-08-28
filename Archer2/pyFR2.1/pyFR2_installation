@@ -1,9 +1,6 @@
 #PyFR2 installation on Archer2
 
-module load PrgEnv-gnu
-module load cray-python/3.10.10
-module load extra-compilers #loads GCC/12+
-module load scotch/7.0.3
+module load PrgEnv-gnu cray-python/3.10.10 extra-compilers scotch/7.0.3
 
 export TTWORKPLACE=/work/e01/e01/ttuw_archer2
 mkdir $TTWORKPLACE/source && cd $TTWORKPLACE/source
