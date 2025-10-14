@@ -1,0 +1,36 @@
+#!/bin/bash
+#SBATCH --job-name=pyfrg
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:4
+#SBATCH --time=0:30:00
+#SBATCH --account=pilot
+#SBATCH --partition=gpu
+
+module purge
+module load Python/3.11.3-GCCcore-12.3.0 OpenMPI/4.1.5-GCC-12.3.0 CMake/3.26.3-GCCcore-12.3.0 CUDA/12.3.0;
+module list
+
+#For srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_PLACES=cores
+
+export TTWORKPLACE=/data/home/tt/ttuw
+export PATH=$TTWORKPLACE/source/py_venv/bin:$PATH
+export PYFR_XSMM_LIBRARY_PATH=$TTWORKPLACE/source/pyFRv2.1/libxsmm/lib/libxsmm.so
+export PYFR_SCOTCH_LIBRARY_PATH=$TTWORKPLACE/source/pyFRv2.1/scotch-v7.0.9/build/lib/libscotch.so
+#Activating PyFR
+source $TTWORKPLACE/source/pyFRv2.1/py_venv/bin/activate;
+
+pyfr --version
+
+echo Importing mesh
+pyfr import taylor-green.msh taylor-green.pyfrm
+
+echo Partitioning
+pyfr partition $SLURM_NTASKS taylor-green.pyfrm .
+echo Partition complete
+
+mpirun --map-by numa:PE=$SLURM_CPUS_PER_TASK -np $SLURM_NTASKS pyfr -p run -b cuda taylor-green.pyfrm taylor-green.ini
