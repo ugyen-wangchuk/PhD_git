@@ -59,7 +59,7 @@ pyfr2.1() {
     export PYFR_INSTALL_DIRECTORY=$TTWORKPLACE/source/pyFRv2.1
     export PATH=$PYFR_INSTALL_DIRECTORY/pyfr2.1_venv/bin:$PATH
     export PYFR_XSMM_LIBRARY_PATH=$PYFR_INSTALL_DIRECTORY/libxsmm/lib/libxsmm.so
-    export PYFR_SCOTCH_LIBRARY_PATH=$PYFR_INSTALL_DIRECTORY/scotch-v7.0.9/build/lib/libscotch.so
+    export PYFR_SCOTCH_LIBRARY_PATH=$PYFR_INSTALL_DIRECTORY/scotch-v7.0.8/build/lib/libscotch.so
 
 	module load PrgEnv-gnu cray-python/3.10.10 extra-compilers scotch/7.0.3
 
