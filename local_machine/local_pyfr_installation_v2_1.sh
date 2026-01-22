@@ -6,7 +6,7 @@ export TTWORKPLACE=/mnt/f
 export PYFR_INSTALL_DIRECTORY=$TTWORKPLACE/source/pyFRv2.1
 
 #Install Python and MPI:
-sudo apt install python3 python3-pip libopenmpi-dev openmpi-bin python3.10-venv
+sudo apt install python3 python3-pip libopenmpi-dev openmpi-bin python3.10-venv cmake
 pip3 install virtualenv
 
 #Building Python virtual environment
