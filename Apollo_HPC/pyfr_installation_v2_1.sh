@@ -72,7 +72,7 @@ pyfr2.1() {
 
 EOF
 
-    echo "Added pyfr21 function to ~/.bash_aliases"
+    echo "Added pyfr2.1 function to ~/.bash_aliases"
 else
-    echo "pyfr21 function already exists in ~/.bash_aliases — skipping"
+    echo "pyfr2.1 function already exists in ~/.bash_aliases — skipping"
 fi
