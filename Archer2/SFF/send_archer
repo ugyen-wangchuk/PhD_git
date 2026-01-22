@@ -1,1 +1,0 @@
-rsync -azP --info=progress2 --info=name0 --exclude={'send_archer','receive_archer'} . ttuw_archer@login.archer2.ac.uk:/home/ta094/ta094/ttuw_archer/SFF

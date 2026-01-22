@@ -1,2 +1,0 @@
-find . -type f ! -name 'receive_archer' ! -name 'send_archer' ! -name 'clean' -delete
-find . -type d ! -name 'receive_archer' ! -name 'send_archer' ! -name 'clean' -delete
