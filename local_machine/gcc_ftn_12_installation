@@ -1,0 +1,27 @@
+#Installing gcc and ftn 12 on Ubuntu and WSL
+
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+
+sudo apt install -y gcc-12 g++-12 gfortran-12
+
+#Checking if they are installed
+ls /usr/bin/gcc-12 /usr/bin/g++-12 /usr/bin/gfortran-12
+
+#Registering the newly installed gcc and ftn
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
+sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-12 100
+sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-12 100
+
+#Selecting the newly install gcc and ftn
+sudo update-alternatives --config gcc
+sudo update-alternatives --config g++
+sudo update-alternatives --config cc
+sudo update-alternatives --config gfortran
+
+#Confirming correct versions
+gcc --version
+cc --version
+gfortran --version
