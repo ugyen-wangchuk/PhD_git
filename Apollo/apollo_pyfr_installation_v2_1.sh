@@ -74,5 +74,7 @@ EOF
 
     echo "Added pyfr2.1 function to ~/.bash_aliases"
 else
-    echo "pyfr2.1 function already exists in ~/.bash_aliases — skipping"
+    echo "Skipping ~/.bash_aliases update"
 fi
+
+echo "Installation complete."
