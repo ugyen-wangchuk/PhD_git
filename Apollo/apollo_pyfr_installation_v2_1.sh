@@ -1,9 +1,6 @@
 #PyFR 2.1 installation script for Apollo HPC
 
-module load Python/3.11.3-GCCcore-12.3.0
-module load OpenMPI/4.1.5-GCC-12.3.0
-module load CMake/3.26.3-GCCcore-12.3.0
-module load CUDA/12.3.0
+module load Python/3.11.3-GCCcore-12.3.0 OpenMPI/4.1.5-GCC-12.3.0 CMake/3.26.3-GCCcore-12.3.0 CUDA/12.3.0
 
 #Export appropriate directory for installation
 export TTWORKPLACE=/data/home/tt/ttuw
