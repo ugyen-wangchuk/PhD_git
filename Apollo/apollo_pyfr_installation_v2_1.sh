@@ -44,12 +44,17 @@ cd $PYFR_INSTALL_DIRECTORY
 
 #Installing PyFR
 pip install pyfr==2.1
+pip uninstall numpy -y #To prevent potential conflicts due to newer numpy versions
+pip install numpy==1.26.4  #Installing compatible numpy version
+
+# Ask user about bash_aliases
+read -r -p "Add PyFR2.1 alias script to ~/.bash_aliases? [y/n] " ans
 
 #Setting up bash alias for easy environment setup
 BASH_ALIASES="$HOME/.bash_aliases"
 
-if ! grep -q "^pyfr2.1()" "$BASH_ALIASES" 2>/dev/null; then
-    cat <<'EOF' >> "$BASH_ALIASES"
+if [[ "$ans" =~ ^[Yy]$ ]]; then
+    cat <<'EOF' >> "$HOME/.bash_aliases"
 # ---- PyFR 2.1 environment setup (Apollo HPC) ----
 pyfr2.1() {
     export TTWORKPLACE=/data/home/tt/ttuw
@@ -58,10 +63,7 @@ pyfr2.1() {
     export PYFR_XSMM_LIBRARY_PATH=$PYFR_INSTALL_DIRECTORY/libxsmm/lib/libxsmm.so
     export PYFR_SCOTCH_LIBRARY_PATH=$PYFR_INSTALL_DIRECTORY/scotch-v7.0.9/build/lib/libscotch.so
 
-    module load Python/3.11.3-GCCcore-12.3.0 \
-                OpenMPI/4.1.5-GCC-12.3.0 \
-                CMake/3.26.3-GCCcore-12.3.0 \
-                CUDA/12.3.0
+    module load Python/3.11.3-GCCcore-12.3.0 OpenMPI/4.1.5-GCC-12.3.0 CMake/3.26.3-GCCcore-12.3.0 CUDA/12.3.0
 
     source $PYFR_INSTALL_DIRECTORY/pyfr2.1_venv/bin/activate
 }
